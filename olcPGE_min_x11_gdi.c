@@ -889,13 +889,14 @@ static void PGE_engineThread ( void )
 						// bPressed is set once, the first time key is pressed
 						pKeyboardState[ i ].bPressed = ! pKeyboardState[ i ].bHeld;
 
-						// bHeld is set for all frames between press and relase
+						// bHeld is set for all frames between press and release
 						pKeyboardState[ i ].bHeld = true;
 					}
 
 					// released
 					else
 					{
+						// bReleased is set once, the first time key is released
 						pKeyboardState[ i ].bReleased = true;
 						pKeyboardState[ i ].bHeld = false;
 					}

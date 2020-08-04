@@ -25,9 +25,9 @@ enum rcode
 
 struct _HWButton
 {
-	bool bPressed;   // = false;
-	bool bReleased;  // = false;
-	bool bHeld;      // = false;
+	bool bPressed;   // set once, when button transitions from released to pressed
+	bool bReleased;  // set once, when button transitions from pressed to released
+	bool bHeld;      // set for all frames between press (inclusive) and release (exclusive)
 };
 
 typedef struct _HWButton HWButton;
@@ -109,6 +109,7 @@ bool UI_onUserDestroy ( void );
 enum rcode PGE_construct ( uint32_t screen_w, uint32_t screen_h,
                            uint32_t pixel_w, uint32_t pixel_h, char* app_title );
 enum rcode PGE_start     ( void );
+// void PGE_end ( void );  // JK, cleanup
 
 
 // User input
