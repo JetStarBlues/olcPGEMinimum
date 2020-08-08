@@ -109,7 +109,7 @@ bool UI_onUserDestroy ( void );
 enum rcode PGE_construct ( uint32_t screen_w, uint32_t screen_h,
                            uint32_t pixel_w, uint32_t pixel_h, char* app_title );
 enum rcode PGE_start     ( void );
-// void PGE_end ( void );  // JK, cleanup
+enum rcode PGE_destroy   ( void );  // JK, cleanup
 
 
 // User input

@@ -95,6 +95,8 @@ int main ( void )
 		PGE_start();
 	}
 
+	PGE_destroy();
+
 	return 0;
 }
 

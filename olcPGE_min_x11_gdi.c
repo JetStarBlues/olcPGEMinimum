@@ -91,8 +91,8 @@ static bool bAtomActive = false;  // JK, not yet implemented as atomic
 	static HWND   olc_hWnd = NULL;
 	static LPVOID sge      = NULL;
 
-	static LRESULT CALLBACK olc_WindowEvent ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-	static HWND PGE_windowCreate ( void );
+	static LRESULT CALLBACK olc_WindowEvent  ( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+	static HWND             PGE_windowCreate ( void );
 
 #else
 
@@ -110,8 +110,8 @@ static bool bAtomActive = false;  // JK, not yet implemented as atomic
 #endif
 
 
-static enum Key mapKey ( unsigned int sym );
-static bool PGE_OpenGLCreate ( void );
+static enum Key mapKey           ( unsigned int sym );
+static bool     PGE_OpenGLCreate ( void );
 
 
 //================================================================================
@@ -149,6 +149,15 @@ static Sprite* Sprite_new ( int w, int h )
 	}
 
 	return sp;
+}
+
+static void Sprite_free ( Sprite* sp )
+{
+	free( sp->pColData );
+
+	free( sp );
+
+	sp = NULL;
 }
 
 static bool Sprite_setPixelRGB ( Sprite* sp, int32_t x, int32_t y, uint8_t r, uint8_t g, uint8_t b )
@@ -1052,7 +1061,7 @@ enum rcode PGE_construct (
 	}
 	else
 	{
-		appTitle = "Untitled";
+		appTitle = strdup( "Untitled" );
 	}
 
 	return OK;
@@ -1351,3 +1360,28 @@ enum rcode PGE_construct (
 	}
 
 #endif
+
+
+//================================================================================
+
+/* JK, attempt to free memory on exit.
+   TODO: all the x11 & GDI stuff
+*/
+enum rcode PGE_destroy ( void )
+{
+	#ifdef _WIN32
+
+		//
+
+	#else
+
+		XFree( olc_VisualInfo );
+
+	#endif
+
+	Sprite_free( pDefaultDrawTarget );
+
+	free( appTitle );
+
+	return OK;
+}
